@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+  {{ petition.title }} | Петиції до Житомирського державного університету ім. Івана Франка
+{% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+{% block body %}
+
+<div class="content">
+  <div class="petition-wrap">
+   
+    <div class="row">
+      <div class="col s10 m7">
+        <h4>{{ petition.title }}</h4>
+      </div>
+      <div class="col s2 m5">
+        <form action="{% url 'sign_petition' pid=petition.id %}" method="post">
+          {% csrf_token %}
+        <button type="submit" style="padding:0 5px;" class=" show-on-small hide-on-med-and-up waves-effect waves-light btn sign-btn green accent-4 {% if not petition.is_active or user_signed %}disabled{% endif %}" href="{% url 'sign_petition' pid=petition.id %}">
+          <i class="center-align material-icons">check</i>
+        </button>
+        <button type="submit" class="hide-on-small-only waves-effect waves-light btn sign-btn green accent-4 {% if not petition.is_active or user_signed %}disabled{% endif %}" href="{% url 'sign_petition' pid=petition.id %}">
+            <i class="material-icons left">check</i>{% if user_signed %}Підписано{% else %}Підписати{% endif %}
+        </button>
+        </form>
+        {% if user.is_authenticated and user.profile.is_admin and petition.is_on_consideration %}
+          <a class="waves-effect waves-light btn orange lighten-2 review-btn" href="{% url 'review_petition' petition.id %}"><i class="material-icons left">mode_edit</i>Відповісти</a>
+        {% endif %}
+      </div>
+    </div>
+  
+  <div class="pet-number">
+    <span>№</span> {{ petition.id }}
+  </div>
+  <div class="pet-author">
+    <i class="material-icons pet-icon">create</i>
+    <span>Автор(ініціатор): </span><a href="{{ petition.author.profile.fb_link }}" target="_blank">{{ petition.author.get_full_name }}</a>
+  </div>
+  <div class="pet-date">
+    <i class="material-icons pet-icon">date_range</i>
+    <span>Дата оприлюднення: </span>{{ petition.publication_date }}
+  </div>
+  <div class="pet-status">
+    {% if petition.is_active %}
+      <i class="material-icons pet-icon">av_timer</i>
+      <span>Кінцева дата: </span> {{ petition.get_end_date }}
+    {% elif petition.is_answered %}
+      <i class="material-icons pet-icon">check</i>
+      <span style="color:green;">Петиція розглянута.</span>
+    {% elif petition.is_rejected  %}
+      <i class="material-icons pet-icon">cancel</i>
+      <span style="color: red;">Петицію не підтримано.</span>
+    {% elif petition.is_on_consideration %}
+      <i class="material-icons pet-icon">schedule</i>
+      <span style="color:lightskyblue;">Петиція знаходиться на розгляді.</span>
+    {% endif %}
+  </div>
+  <div class="per-progress">
+    <span>Прогрес:</span>
+    <div class="progress">
+      <div class="determinate" style="width: {{ petition.get_progress_percentages }}%"></div>
+    </div>
+    <div class="pet-sign-count">
+      Підписалось: {{ petition.get_signatures_count }}
+    </div>
+    {% if petition.get_signatures_left %}
+      <div class="pet-sign-left-count">
+        Залишилось: {{ petition.get_signatures_left }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="pet-tabs">
+    <div class="row">
+    <div class="col s12 hide-on-small-only">
+      <ul class="tabs">
+        <li class="tab col s4 {% if not petition.answer %}disabled{% endif %}">
+          <a href="#pet-ans-tab">Відповідь на петицію</a>
+        </li>
+        <li class="tab col s4">
+          <a class="active" href="#pet-text-tab">Текст петиції</a>
+        </li>
+        <li class="tab col s4">
+          <a href="#pet-sign-tab">Підписанти</a>
+        </li>
+      </ul>
+    </div>
+    <div id="pet-ans-tab" class="col s12 hide-on-small-only">
+      <br>
+      <h6> Відповів(лаx): 
+      <a href="{{ petition.responder.profile.fb_link }}" target="_blank">{{ petition.responder.get_full_name }}</a>,  {{petition.response_date}}</h6>
+      <h6>{{ petition.answer|linebreaks }}</h6>
+    </div>
+    <div id="pet-text-tab" class="col s12 hide-on-small-only">
+      <div class="pet-text">
+        {{ petition.text|linebreaks }}
+      </div>
+    </div>
+    <div id="pet-sign-tab" class="col s12 hide-on-small-only">
+      <br>
+    
+      <h5>Перелік осіб які підписали електронну петицію:</h5>
+      <table class="bordered">
+        <tbody>
+          {% for signature in signatures %}
+          <tr>
+            <td>
+              <a href="{%if signature.user.profile.fb_link%}{{signature.user.profile.fb_link}}{%endif%}" target="_blank">
+                {{ signature.user.get_full_name }}
+              </a>
+            </td>
+            <td>{{ signature.date }}</td>
+          </tr>
+          {% empty %}
+          <h6>Цю петицію поки ніхто не підтримав.</h6>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!---->
+    <div class="show-on-small hide-on-med-and-up">
+    
+        <div class="col s12 ">
+         {% if petition.is_answered or petition.answer %}
+          <br>
+          <h6> Відповів(ла):
+            <a href="{{ petition.responder.profile.fb_link }}" target="_blank">{{ petition.responder.get_full_name }}</a>, {{petition.response_date}}</h6>
+          <h6>{{ petition.answer|linebreaks }}</h6>
+          {% endif %}
+        </div>
+        <div class="col s12 ">
+          <div class="pet-text">
+            {{ petition.text|linebreaks }}
+          </div>
+        </div>
+        <div class="col s12 ">
+          <br>
+      
+          <h5>Перелік осіб які підписали електронну петицію:</h5>
+          <table class="bordered">
+            <tbody>
+              {% for signature in signatures %}
+              <tr>
+                <td>
+                  <a href="{%if signature.user.profile.fb_link%}{{signature.user.profile.fb_link}}{%endif%}" target="_blank">
+                    {{ signature.user.get_full_name }}
+                  </a>
+                </td>
+                <td>{{ signature.date }}</td>
+              </tr>
+              {% empty %}
+              <h6>Цю петицію поки ніхто не підтримав.</h6>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock body %}

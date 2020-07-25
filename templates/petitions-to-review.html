@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+  Петиції на розгляд
+{% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+{% block body %}
+
+<div class="content">   
+  <div class="row">
+   <div class="col s12 m4 push-m8">
+      {% include 'profile-menu.html' with active='to-review-petitions' %}
+    </div>
+      <div class="col s12 m8 pull-m4">
+     <h4>Петиції які очікують розгляду:</h4>
+      {% include 'petitions-table-profile.html' %}
+  </div>
+  </div>
+</div>
+{% endblock body %}

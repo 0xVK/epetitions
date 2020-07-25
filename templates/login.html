@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+  Авторизація
+{% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+{% block body %}
+
+<div class="content center">
+  <h5>Для продовження треба авторизуватись</h5>
+   
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert-error">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+  
+  <div class="center">
+    <img src="{% static 'img/fb_logo.png' %}" class="auth-fb-btn" onclick="FB_Login()">
+  </div>
+   
+
+</div>
+{% endblock body %}

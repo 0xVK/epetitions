@@ -1,0 +1,25 @@
+ <table class="highlight">
+    <thead>
+      <tr>
+          <th class="justify-align">Суть петиції</th>
+          <th class="justify-align">Залишилося днів</th>
+          <th class="justify-align">Статус</th>
+          <th class="justify-align">Зібрано підписів</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     {% for petition in petitions %}
+      <tr>
+        <td class="justify-align"><a href="{{ petition.get_absolute_url }}"> {{ petition.title }} </a></td>
+        <td class="justify-align">{{ petition.get_days_to_end }}</td>
+        <td class="justify-align">{{ petition.get_status }}</td>
+        <td class="justify-align"> {{ petition.get_signatures_count }} / {{ petitions_signs }} ({{ petition.get_progress_percentages }}%)</td>
+      </tr>
+     {% empty %}
+     <tr>
+        <td colspan="3">Наразі тут пусто.</td>
+      </tr>
+     {% endfor %}
+    </tbody>
+  </table>

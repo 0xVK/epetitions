@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    Створити петицію
+{% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+{% block body %}
+
+<div class="content">
+  <h5>Створити нову петицію</h5>
+   
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert-error">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+   
+   <form class="col s12" method="post" action="{% url 'create_petition' %}">
+     {% csrf_token %}
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="title" type="text" class="validate" maxlength="150" required name="title">
+          <label for="title">Назва</label>
+        </div>
+        <div class="input-field col s12">
+          <textarea id="text" class="materialize-textarea" maxlength="10000" name="text"></textarea>
+          <label for="textarea1">Текст</label>
+        </div>
+      </div>
+      <button type="submit" class="waves-effect waves-light btn green accent-4">
+        <i class="material-icons left">check</i>Відправити
+      </button>
+   </form>
+</div>
+{% endblock body %}

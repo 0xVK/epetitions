@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+  Петиції до Житомирського державного університету ім. Івана Франка
+{% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+{% block body %}
+<div class="content">
+  <h5 class="main-title">Петиції до Житомирського державного університету імені Івана Франка</h5>
+  <div class="mein-pet-info col s12">
+    <img id="petition-map-img" class="center" src="{% static 'img/petitions-map.png' %}">
+    
+    <p>
+      <b>Електронні петиції</b> &mdash; Звернення студентів та співробітників до відповідних органів та служб університету з питань що стосуються поліпшення інфраструктури, надання послуг, організації дозвілля та інших питань що стосується даного університету. Петиція має набрати не менше 100 підписів впродовж місяця для її подальшого розгляду відповідальними особами. Електронні петиції повинні стосуватися питань, які належать до сфери діяльності університету.
+    </p>
+    
+  </div>
+  
+  <h5 class="main-title">Останні петиції</h5>
+  
+  <div class="row index-btns center-align ">
+      <a class="waves-effect waves-light index-btn btn col " href="?filter=active">
+          <i class="material-icons left">edit</i> збір підписів
+      </a>
+      <a class="waves-effect waves-light index-btn btn col " href="?filter=on_consideration">
+            <i class="material-icons left">schedule</i> на розгляді
+      </a>
+      <a class="waves-effect waves-light index-btn btn col " href="?filter=answered">
+            <i class="material-icons left">check</i> з відповіддю
+      </a>
+      <a class="waves-effect waves-light index-btn btn col " href="?filter=rejected">
+            <i class="material-icons left">clear</i> не підтримані
+      </a>
+  </div>
+  
+  <div>
+   <hr>
+    <span>Показано петицій: {{petitions|length}}</span><hr>
+     <table class="highlight">
+        <thead>
+          <tr>
+              <th>Суть петиції</th>
+              <th>Залишилося днів</th>
+              <th>Зібрано підписів</th>
+          </tr>
+        </thead>
+
+        <tbody>
+         {% for petition in petitions %}
+          <tr>
+            <td><a href="{{ petition.get_absolute_url }}"> {{ petition.title }} </a></td>
+            <td>{{ petition.get_days_to_end }}</td>   
+            <td> {{ petition.get_signatures_count }} / {{ petitions_signs }} ({{ petition.get_progress_percentages }}%)</td>
+          </tr>
+         {% empty %}
+         <tr>
+            <td colspan="3">Наразі ніхто петицій не створював.</td>
+          </tr>
+         {% endfor %}
+        </tbody>
+      </table>
+  </div>
+  
+</div>
+{% endblock body %}

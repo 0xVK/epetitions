@@ -1,0 +1,172 @@
+.nav-wrapper{
+   width: 100%;
+   margin: 0 ;
+   padding: auto;
+}
+nav .button-collapse{
+    margin:0 0;
+     
+}
+.index-btn{
+    margin:2px;
+    margin-left:2px;
+    width: 172px;
+  }
+  @media only screen and (min-width: 800px) {
+    .index-btn{
+        width: 185px;
+      }
+}
+  .index-btns{
+    justify-content: center;
+    display: flex;
+
+    flex-wrap: wrap;
+  }
+.create-petition-btn {
+    background-color: #ffeb3b;
+/*    color: #29b6f6;*/
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.logo-img {
+    height: 67px;
+}
+.container {
+    width: 75%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.petition-wrap {
+    
+}
+.pet-number > span,
+.pet-author > span,
+.pet-date > span,
+.pet-status > span,
+.pet-sign-count-review > span{
+    font-weight:500;
+}
+.pet-icon {
+    font-size: 17px;
+}
+.pet-tabs{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.pet-text{
+    margin-top: 35px;
+    font-size: 16px;
+}
+.pet-sign-left-count{
+    float: right;
+}
+.pet-sign-count{
+    float: left;
+}
+.per-progress{
+    margin-top: 20px;
+    margin-bottom: 52px;
+}
+.progress{
+    margin-bottom: 10px;
+    background-color: #40c4ff;
+}
+.progress .determinate{
+    background-color: #0277bd;
+}
+.page-footer{
+    padding-top: 0px;
+    background-color: #01579b;
+    height: 65px;
+}
+.sign-btn, .review-btn{
+    margin-top: 17px;
+    float: right;
+}
+.tabs > .tab {
+    width: 25%;
+}
+
+.tabs .tab.disabled a{
+    color: #448aff;
+}
+.tabs .tab.disabled a:hover {
+    color: #90caf9;
+}
+.tabs .tab a{
+    color:#448aff;
+}
+.tabs .tab a:hover{
+    color: #1565c0;
+}
+.tabs .tab a.active{
+    color:#2962ff;
+}
+.tabs .indicator{
+    background-color: #48affd;
+}
+
+/* main page */
+
+.main-title{
+  background-color: #0076A3;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+.mein-pet-info{
+  text-align: center;
+}
+.mein-pet-info > img{
+  width: 480px;
+}
+.main-filter-btns{
+  text-align: center;
+  margin: 20px 0;
+}
+.main-filter-btns > a{
+  background-color: #26c6da;
+}
+.main-filter-btns > a:hover{
+  background-color: #0097a7;
+}
+
+.alert-error{
+  color: crimson;
+}
+.alert-success{
+  color: green;
+}
+.auth-fb-btn{
+  width: 80px;
+  margin-top: 30px;
+}
+.auth-fb-btn:hover{
+  cursor: pointer;
+}
+.footer-text{
+  margin: auto;
+  margin-top: 20px;
+}
+.collection a.collection-item{
+  color: #40c4ff ;
+}
+.collection .collection-item.active{
+  background-color:#00b0ff; 
+}
+span.badge{
+  color: white;
+}
+#petition-map-img{
+    width:70%;
+}
+
+@media only screen and (max-device-width: 600px) {
+  .logo-img {
+     height: 60px; 
+  }
+}

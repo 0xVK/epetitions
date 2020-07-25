@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+  Відповісти на петицію
+{% endblock %}
+
+{% block head %}
+{% endblock head %}
+
+{% block javascript %}
+{% endblock javascript %}
+
+{% block body %}
+
+<div class="content">
+  <a href="{{ petition.get_absolute_url }}" target="_blank"><h5>{{ petition.title }}</h5></a>
+  <br>
+  <div class="pet-number">
+    <span>№</span> {{ petition.id }}
+  </div>
+  <div class="pet-author">
+    <i class="material-icons pet-icon">create</i>
+    <span>Автор(ініціатор): </span><a href="{{ petition.author.profile.fb_link }}" target="_blank">{{ petition.author.get_full_name }}</a>
+  </div>
+  <div class="pet-date">
+    <i class="material-icons pet-icon">date_range</i>
+    <span>Дата оприлюднення: </span>{{ petition.publication_date }}
+  </div>
+  <div class="pet-sign-count-review">
+   <i class="material-icons pet-icon">people</i>
+    <span>Кількість підписів:</span> {{ petition.get_signatures_count }}
+  </div>
+  <div class="pet-text">
+    {{ petition.text|linebreaks }}
+  </div>
+</div>
+
+<form action="{% url 'review_petition' petition.id %}" method="post">
+  {% csrf_token %}
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">mode_edit</i>
+          <textarea id="icon_prefix2" class="materialize-textarea" maxlength="9800" name="answer"></textarea>
+          <label for="icon_prefix2">Відповідь:</label>
+        </div>
+      </div>
+      <button type="submit" class="waves-effect waves-light btn green accent-4">
+        <i class="material-icons left">check</i>Відправити
+      </button>
+    </form>
+  </div>
+        
+</form>
+{% endblock body %}

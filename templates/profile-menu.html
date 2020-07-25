@@ -1,0 +1,16 @@
+<div class="collection">
+    <a href="{% url 'my-petitions' %}" class="collection-item {% if active == 'my-petitions' %}active{% endif %}">
+      <span class="badge blue">{{ my_petitions_count }}</span>Мої петиції
+    </a>
+    <a href="{% url 'my-signed-petitions' %}" class="collection-item {% if active == 'my-signed-petitions' %}active{% endif %}">
+      <span class="badge blue">{{ petitions_signed_by_me_count }}</span>Підписані мною
+    </a>
+    {% if user.profile.is_admin %}
+      <a href="{% url 'petitions-to-review' %}" class="collection-item  {% if active == 'to-review-petitions' %}active{% endif %}">
+        <span class="badge blue">{{ petitions_to_review_count }}</span>На розгляд
+      </a>
+      <a href="#!" class="collection-item">
+        <span class="badge">В розробці</span>Статистика
+      </a>
+    {% endif %}
+</div>
